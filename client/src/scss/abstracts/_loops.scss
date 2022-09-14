@@ -1,0 +1,107 @@
+@use "../maps/colors" as *;
+@use "../maps/width" as *;
+@use "../maps/fonts" as *;
+
+:root {
+
+   @each $name, $color in $colors {
+      --clr-#{$name}: #{$color};
+   }
+
+   @each $name, $width in $widths {
+      --w-#{$name}: #{$width};
+   }
+
+   @each $name, $font in $family {
+      --f-#{$name}: #{$font};
+   }
+
+   @each $name, $size in $sizes {
+      --f-size-#{$name}: #{$size};
+   }
+
+   @each $name, $weight in $weights {
+      --weight-#{$name}: #{$weight};
+   }
+
+
+   @for $i from 1 through 20 {
+      --size-#{$i}: #{$i * 0.3}rem;
+   }
+
+}
+
+@for $i from 1 through 20 {
+
+   // margins
+   .mt-#{$i} {
+      margin-top: var(--size-#{$i});
+   }
+
+   .mb-#{$i} {
+      margin-bottom: var(--size-#{$i});
+   }
+
+   .ml-#{$i} {
+      margin-left: var(--size-#{$i});
+   }
+
+   .mr-#{$i} {
+      margin-right: var(--size-#{$i});
+   }
+
+   .mbl-#{$i} {
+      margin-block: var(--size-#{$i});
+   }
+
+   .min-#{$i} {
+      margin-inline: var(--size-#{$i});
+   }
+
+   // paddings
+   .pt-#{$i} {
+      padding-top: var(--size-#{$i});
+   }
+
+   .pb-#{$i} {
+      padding-bottom: var(--size-#{$i});
+   }
+
+   .pl-#{$i} {
+      padding-left: var(--size-#{$i});
+   }
+
+   .pr-#{$i} {
+      padding-right: var(--size-#{$i});
+   }
+
+   .pbl-#{$i} {
+      padding-block: var(--size-#{$i});
+   }
+
+   .pin-#{$i} {
+      padding-inline: var(--size-#{$i});
+   }
+
+   .g-#{$i} {
+      gap: var(--size-#{$i});
+   }
+}
+
+@for $i from 1 through 10 {
+   .br-#{$i} {
+      border-radius: #{$i * 0.2}vmax;
+   }
+
+   .bw-#{$i} {
+      border-width: #{$i * 0.5}px;
+   }
+
+   .z-#{$i} {
+      z-index: #{$i};
+   }
+
+   .lh-#{$i} {
+      line-height: #{1 + ($i * 0.25) };
+   }
+}

@@ -1,0 +1,39 @@
+* {
+   margin: 0;
+   padding: 0;
+   font-family: var(--f-normal);
+   box-sizing: border-box;
+
+   :focus {
+      outline: 1px solid var(--clr-blue);
+   }
+}
+
+html {
+   scroll-behavior: smooth;
+}
+
+body {
+   ::selection {
+      background-color: var(--clr-blue);
+      color: var(--clr-white);
+   }
+}
+
+body, #app {
+   width: 100vw;
+   min-height: 100vh;
+   overflow-x: hidden;
+}
+
+img {
+   max-width: 100%;
+}
+
+a {
+   text-decoration: none;
+}
+
+input {
+   outline: none;
+}

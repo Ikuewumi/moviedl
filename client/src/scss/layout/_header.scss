@@ -1,0 +1,15 @@
+header .container {
+   display: flex;
+   flex-direction: column;
+}
+
+header nav {
+   a:hover {
+      background-color: var(--clr-gray-vl);
+      // color: var(--clr-white);
+   }
+   a.router-link-active {
+      background-color: var(--clr-blue);
+      color: var(--clr-white);
+   }
+}

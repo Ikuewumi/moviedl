@@ -1,0 +1,7 @@
+@use '../maps/width' as *;
+
+@each $name, $width in $widths {
+   .w-#{$name} {
+      width: var(--w-#{$name});
+   }
+}

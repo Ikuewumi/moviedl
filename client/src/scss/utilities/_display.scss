@@ -1,0 +1,75 @@
+@use "../maps/display" as *;
+
+@each $name, $val in $display {
+   .#{$name} {
+      display: #{$val}
+   }
+}
+
+@each $name, $group in $alignments {
+   @each $display, $val in $group {
+      @if $name == align {
+         .a-#{$display} {
+            align-items: #{$val};
+         }
+
+         .a-self-#{$display} {
+            align-self: #{$val};
+         }
+      } 
+      @if $name == justify {
+         .j-#{$display} {
+            justify-content: #{$val};
+         }
+
+         .j-self-#{$display} {
+            justify-self: #{$val};
+         }
+      }
+      @if $name == place {
+         .p-#{$display} {
+            place-content: #{$val};
+         }
+
+         .p-self-#{$display} {
+            place-self: #{$val};
+         }
+      }
+      
+
+      
+   }
+   @if $name==align {
+
+      @each $display,
+      $val in $group {
+         .a-#{$display} {
+            align-items: #{$val};
+         }
+
+         .a-self-#{$display} {
+            align-content: #{$val};
+         }
+      }
+
+   }
+
+   @else {
+
+      @each $display,
+      $val in $group {
+         .j-#{$display} {
+            justify-items: #{$val};
+         }
+
+         .j-self-#{$display} {
+            justify-content: #{$val};
+         }
+      }
+   }
+
+}
+
+.flex-wrap {
+   flex-wrap: wrap;
+}

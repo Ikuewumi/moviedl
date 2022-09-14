@@ -1,0 +1,20 @@
+@use '../maps/colors'as *;
+
+@each $name,
+$color in $colors {
+   .c-#{$name} {
+      color: var(--clr-#{$name})
+   }
+
+   .bg-#{$name} {
+      background-color: var(--clr-#{$name})
+   }
+
+   .f-#{$name} {
+      fill: var(--clr-#{$name})
+   }
+
+   .b-#{$name} {
+      border-color: var(--clr-#{$name})
+   }
+}

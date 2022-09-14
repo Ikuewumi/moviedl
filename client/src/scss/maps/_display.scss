@@ -1,0 +1,16 @@
+$display: (flex: flex,
+   grid: grid,
+   contents: contents);
+
+$alignments: (align: (center: center,
+      start: flex-start,
+      end: flex-end,
+   ),
+
+   justify: (center: center,
+      start: start,
+      end: end,
+      left: left,
+      right: left,
+      around: space-around,
+      between: space-between));

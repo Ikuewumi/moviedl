@@ -1,0 +1,25 @@
+@use '../maps/fonts' as *;
+
+@each $name, $font in $family {
+   .f-#{$name} {
+      font-family: var(--f-#{$name});
+   }
+}
+
+@each $name, $size in $sizes {
+   .f-size-#{$name} {
+      font-size: var(--f-size-#{$name});
+   }
+}
+
+@each $name, $weight in $weights {
+   .weight-#{$name} {
+      font-weight: var(--weight-#{$name})
+   }
+}
+
+@each $name, $space in $spacings {
+   .ls-#{$name} {
+      letter-spacing: #{$space};
+   }
+}

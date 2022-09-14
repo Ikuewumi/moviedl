@@ -1,0 +1,9 @@
+@use 'sass:map';
+@use '../maps/mq' as *;
+
+@mixin mq($key) {
+   $size: map-get($breakpoints, $key);
+   @media (max-width: $size) {
+      @content;
+   }
+}

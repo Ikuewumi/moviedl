@@ -1,0 +1,36 @@
+.container {
+   width: var(--w-body);
+   margin-inline: auto;
+}
+
+.min-auto {
+   margin-inline: auto;
+}
+
+.mbl-auto {
+   margin-block: auto;
+}
+
+.case-upper {
+   text-transform: uppercase;
+}
+.case-lower {
+   text-transform: lowercase;
+}
+
+.input-reset {
+   outline: none;
+}
+
+.cursor { cursor: pointer; }
+
+.underline { text-decoration: underline; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+.static { position: static; }
+.sticky { position: sticky; }
+.relative { position: relative; }
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+

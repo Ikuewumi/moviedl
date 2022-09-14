@@ -1,0 +1,22 @@
+{
+   "name": "moviedl",
+   "private": true,
+   "version": "0.0.0",
+   "scripts": {
+      "dev": "vite",
+      "build": "vite build",
+      "preview": "vite preview"
+   },
+   "dependencies": {
+      "gsap": "^3.11.0",
+      "pinia": "^2.0.22",
+      "vue": "^3.2.25",
+      "vue-router": "^4.1.5"
+   },
+   "devDependencies": {
+      "@vitejs/plugin-vue": "^2.3.3",
+      "sass": "^1.54.8",
+      "typescript": "^4.8.2",
+      "vite": "^2.9.9"
+   }
+}
