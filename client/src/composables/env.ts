@@ -13,5 +13,7 @@ export function setToken(token: string = '') {
 export const regexObject = {
    name: /^([a-zA-Z]+) ([a-zA-Z]+)$/,
    password: /^[\w\W]{6,}$/,
-   email: /^([a-z\d\.]+)@([a-z\d\-]+)\.([a-z]{2,8})((\.)[a-z]{2,8})?$/
+   email: /^([a-z\d\.]+)@([a-z\d\-]+)\.([a-z]{2,8})((\.)[a-z]{2,8})?$/,
+   imdbId: /^tt[0-9]{6,12}$/,
+   dbid: /^(\w\d){24}$/
 }

@@ -78,9 +78,9 @@ const signup = async (evt: HTMLFormElement) => {
 </script>
 
 <template>
-   <section class="w-full fixed z-7 grid a-center j-center g-2 bg-gray-t" data-overlay @click.self="$emit('close')">
-      <div class="grid g-2 w-form" data-content>
-         <section class="w-full grid g-2 text-center f-round">
+   <section class="w-full fixed z-7 grid j-center g-2 bg-gray-t" data-overlay @click.self="$emit('close')">
+      <div class="grid g-2 w-form" data-c-auth>
+         <section class="widget w-full grid g-2 text-center f-round">
             <span class="pbl-3 pin-2 f-round br-4 cursor bg-gray-l" :class="showLogin ? 'active' : ''"
                @click="showLogin = true">login</span>
             <span class="pbl-3 pin-2 f-round br-4 cursor bg-gray-l" :class="!showLogin ? 'active' : ''"
@@ -131,22 +131,37 @@ const signup = async (evt: HTMLFormElement) => {
 </template>
 
 <style lang="scss">
+@use '@/scss/abstracts/mixins' as *;
+
 [data-overlay] {
    inset: 0 auto auto 0;
    height: 100vh;
    overflow-x: hidden;
    overflow-y: auto;
+   background: rgba(255 255 255 / 0.95);
+
+   * {
+
+
+      @include mq(small) {
+         // font-size: 90%;
+
+         --f-size-bigger: 1.2rem;
+         --f-size-m-big: 1rem;
+
+      }
+   }
 
    [data-close] {
       inset: 1rem 1rem auto auto;
    }
 
    [data-content] {
-      box-shadow: 0 0 10px -7px rgb(0 0 0 / 0.2);
+      box-shadow: 0 2px 2px -1px rgb(0 0 0 / 0.5);
       max-width: 450px;
    }
 
-   [data-content]>section {
+   .widget {
       grid-template-columns: repeat(auto-fit, minmax(100px, auto));
 
       span.active {
@@ -160,6 +175,7 @@ const signup = async (evt: HTMLFormElement) => {
    .field {
       display: grid;
       grid-template-columns: 50px calc(100% - 50px);
+      align-items: center;
       grid-template-areas: "emoji input";
       background: var(--clr-white);
       padding-block: var(--size-1);
@@ -168,7 +184,8 @@ const signup = async (evt: HTMLFormElement) => {
 
       span.f-emoji {
          grid-area: emoji;
-         align-self: flex-start;
+         // align-self: flex-start;
+         line-height: 1;
       }
 
       input,
@@ -201,5 +218,11 @@ const signup = async (evt: HTMLFormElement) => {
       border: none;
    }
 
+}
+
+[data-c-auth] {
+   transform: translateY(10%);
+
+   height: fit-content;
 }
 </style>

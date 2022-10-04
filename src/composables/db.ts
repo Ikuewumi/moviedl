@@ -1,4 +1,4 @@
-import mongoose, { model, Model, Mongoose } from "mongoose";
+import mongoose, { model, Model, Mongoose, Schema } from "mongoose";
 import { oid, validateId } from ".";
 import User from "../models/User";
 import Movie from "../models/Movie";
@@ -28,7 +28,7 @@ export async function findOne(model: cModel, field = {}, select = {}) {
    return data;
 }
 
-export async function findById(model: cModel, id = "", field = {}, select = {}) {
+export async function findById(model: cModel, id: string, field = {}, select = {}) {
    if (!validateId(id)) return null;
    const data = await model.findOne({
       _id: oid(id), ...field
@@ -36,13 +36,14 @@ export async function findById(model: cModel, id = "", field = {}, select = {}) 
    return data;
 }
 
-export async function find(model: cModel, field = {}, select = {}, more = {
+export async function find(model: cModel, field = {}, select = {}, sort = {}, more = {
    limit: 0,
    skip: 0
 }) {
    const data = await model
       .find(field)
       .select(select)
+      .sort(sort)
       .limit(more.limit)
       .skip(more.skip)
 
@@ -56,7 +57,7 @@ export async function updateOne(model: cModel, field = {}, updateField = {}) {
    return data.matchedCount
 }
 
-export async function updateById(model: cModel, id = "", field = {}, updateField = {}) {
+export async function updateById(model: cModel, id: string, field = {}, updateField = {}) {
    if (!validateId(id)) return 0;
    const data = await model
       .updateOne({
@@ -74,6 +75,27 @@ export async function updateMany(model: cModel, field = {}, updateField = {}) {
    return data.matchedCount
 }
 
+export async function remove(model: cModel, field = {}) {
+   const data = await model
+      .deleteMany(field)
+
+   return data.deletedCount
+}
+
+export async function removeOne(model: cModel, field = {}) {
+   const data = await model
+      .deleteOne(field)
+
+   return data.deletedCount
+}
+
+export async function removeById(model: cModel, id: string, field = {}) {
+   const data = await model
+      .deleteOne({ _id: oid(id), ...field })
+
+   return data.deletedCount
+}
+
 export async function setOne(model: cModel, field = {}, updateField = {}) {
    const data = await model
       .updateOne(field, { $set: { ...updateField } })
@@ -81,7 +103,7 @@ export async function setOne(model: cModel, field = {}, updateField = {}) {
    return data.matchedCount
 }
 
-export async function setById(model: cModel, id = "", field = {}, updateField = {}) {
+export async function setById(model: cModel, id: string, field = {}, updateField = {}) {
    if (!validateId(id)) return 0;
    const data = await model
       .updateOne(

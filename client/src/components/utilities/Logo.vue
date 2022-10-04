@@ -1,5 +1,5 @@
 <template>
-   <div class="logo f-size-big flex a-center j-center w-fit" :class="`f-${theme}`">
+   <div class="logo f-size-big flex a-center j-center w-fit" :class="`f-${theme}`" v-once>
       <svg class="w-logo" viewBox="0 0 24 24">
          <use href="#logo"></use>
       </svg>

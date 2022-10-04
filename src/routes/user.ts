@@ -8,7 +8,7 @@ const router = Router()
 
 router.get('/', verify, async (req: UserReq, res: Response) => {
    try {
-      const data = await findById(User, req.user?.id, {}, createSelects(dbFields.user))
+      const data = await findById(User, req.user?.id ?? '', {}, createSelects(dbFields.user))
       return sendObj(res, data!)
    }
    catch (e) { }
@@ -25,7 +25,7 @@ router.patch('/', verify, async (req: UserReq, res: Response) => {
          description: req.body?.description
       }
 
-      const data = await setById(User, req.user?.id, {}, user)
+      const data = await setById(User, req.user?.id ?? '', {}, user)
       if (!data) return sendMsg(res, 'Something went wrong. Please try again', 503)
 
       return sendMsg(res, 'Update successful!', 200)

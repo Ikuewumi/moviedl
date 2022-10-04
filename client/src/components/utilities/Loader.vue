@@ -25,7 +25,7 @@ const [enter, leave] = gFactory(animObject.off, animObject.on)
 <template>
    <transition @enter="enter" @leave="leave">
       <div data-loader class="z-9 flex a-center pin-3" v-if="loader.data">
-         <div class="w-body min-auto flex a-center g-2 c-gray-d">
+         <div class="w-body min-auto flex a-center g-2 c-gray-d f-size-normal">
             <svg class="w-logo load f-gray-l" viewBox="0 0 24 24">
                <use href="#logo"></use>
             </svg>
@@ -61,12 +61,12 @@ const [enter, leave] = gFactory(animObject.off, animObject.on)
       // border-radius: 50%;
       overflow: hidden;
       // width: ;
-      transform: translateY(0);
+      transform: rotate(0) translateY(0);
       animation: move 0.9s ease infinite alternate;
 
       @keyframes move {
          to {
-            transform: translateY(-5px);
+            transform: translateY(-5px) rotate(360deg);
          }
       }
    }

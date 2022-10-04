@@ -1,0 +1,21 @@
+<script setup>
+const props = defineProps(['name', 'label', 'modelValue', 'p', 'mini'])
+const emit = defineEmits(['update:modelValue'])
+
+const input = $computed({
+   get() { return props.modelValue },
+   set(value) { emit('update:modelValue', value) }
+})
+</script>
+
+<template>
+   <div data-component-input class="grid a-center">
+      <label v-if="label" :for="name" data-label>{{ label }}</label>
+      <textarea :name="name" :placeholder="p" v-model="input" data-input></textarea>
+
+      <small v-if="$slots.about" class="mt-1">
+         <slot name="about">More information</slot>
+      </small>
+      <slot name="more"></slot>
+   </div>
+</template>

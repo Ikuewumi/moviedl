@@ -1,9 +1,14 @@
-<script setup>
+<script setup lang="ts">
 import useUser from '@/stores/user';
-import { onBeforeMount } from 'vue';
+import { onBeforeMount, inject } from 'vue';
+import AdminPanel from '@/components/admin/AdminPanel.vue';
 const user = useUser()
 
 onBeforeMount(user.refreshUser)
+
+const title = inject('title') as Function
+title('My Profile')
+
 </script>
 
 <template>
@@ -13,29 +18,32 @@ onBeforeMount(user.refreshUser)
             <img v-if="user.getUser.img" :src="user.getUser.img" alt="">
             <span v-else class="f-emoji">👤</span>
          </div>
-         <h1 class="lh-1 mt-2 min-auto f-size-big f-round">
+         <h1 class="lh-1 mt-2 min-auto f-size-big f-round flex a-center j-center g-2">
             {{ user.getUser.name }}
+            <span class="admin" v-if="user.getUser.admin">ADMIN</span>
          </h1>
-         <p class="lh-2 mt-2 min-auto" v-if="user.getUser.description">
+         <p class="lh-2 mt-2 min-auto f-size-normal" v-if="user.getUser.description">
             {{ user.getUser.description }}
          </p>
          <div class="mt-6 f-size-m-big">
-            <router-link class="pbl-2 pin-4 bg-gray-l c-gray-d br-6" to="/edit-profile">
+            <RouterLink class="pbl-2 pin-4 bg-gray-l c-gray-d br-6" to="/edit-profile">
                <span class="f-emoji">✏</span> edit profile
-            </router-link>
+            </RouterLink>
          </div>
       </section>
 
-      <section class="mt-10 pbl-6 pin-5 bg-white flex g-3 a-center j-center">
+      <!-- <section class="mt-10 pbl-6 pin-5 bg-white flex g-3 a-center j-center">
          <h3 class="f-round f-size-a-big w-fit c-gray-d weight-thin">Create:</h3>
          <div class="grid create-bar g-3">
-            <router-link to="/create?type=movie" class="c-gray-d pin-3 pbl-3 br-6 cursor f-size-m-big"><span
-                  class="f-emoji">🎞</span> Movie</router-link>
-            <router-link to="/create?type=series" class="c-gray-d pin-3 pbl-3 br-6 cursor f-size-m-big"><span
-                  class="f-emoji">📺</span> Series</router-link>
+            <RouterLink to="/start?type=movie" class="c-gray-d pin-3 pbl-3 br-6 cursor f-size-m-big"><span
+                  class="f-emoji">🎞</span> Movie</RouterLink>
+            <RouterLink to="/start?type=series" class="c-gray-d pin-3 pbl-3 br-6 cursor f-size-m-big"><span
+                  class="f-emoji">📺</span> Series</RouterLink>
          </div>
 
-      </section>
+      </section> -->
+
+      <AdminPanel v-if="user.getUser.admin" />
 
 
    </div>
@@ -76,14 +84,15 @@ onBeforeMount(user.refreshUser)
    }
 
    .create-bar {
-      grid-template-columns: repeat(auto-fill, minmax(200px, auto));
+      grid-template-columns: repeat(auto-fill, minmax(100px, auto));
       width: 100%;
-      max-width: 450px;
+      max-width: 300px;
 
       >a {
          background: rgb(0 0 0 / 0.02);
          outline: 0.5px solid rgb(0 0 0 / 0.22);
          line-height: 0.9;
+         // text-align: center;
 
          transition: color 0.3s;
 
@@ -91,6 +100,20 @@ onBeforeMount(user.refreshUser)
             background: rgba(74, 171, 190, 0.1);
          }
       }
+   }
+
+   span.admin {
+      padding: 0.1rem 0.2rem;
+      line-height: 1;
+      border-radius: 1.2vmax;
+      background: rgb(209, 209, 18);
+      font-weight: 600;
+      font-family: var(--f-round);
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      color: var(--clr-white);
+      align-self: center;
+      justify-content: space-around;
    }
 }
 </style>

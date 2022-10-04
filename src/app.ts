@@ -13,12 +13,14 @@ dotenv.config();
 const app: Application = express();
 
 app.use(cors())
+app.use(express.static('public'))
 app.use(bodyParser.json({
    limit: '500kb'
 }));
 app.use(morgan("dev"));
 
-app.get("/", verify, (req: Request, res: Response) => {
+app.get("/", (req: Request, res: Response) => {
+   
    res.json({
       msg: "works",
    });

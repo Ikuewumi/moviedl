@@ -2,7 +2,8 @@ $family: (
    normal: 'Work Sans',
    heading: 'Ubuntu',
    round: 'Urbanist',
-   emoji: #{"Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", Times, Symbola, Aegyptus, Code2000, Code2001, Code2002, Musica, serif, LastResort}
+   emoji: #{"Noto Emoji", "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", Times, Symbola, Aegyptus, Code2000, Code2001, Code2002, Musica, serif, LastResort},
+   e: #{"Segoe UI Emoji", "Apple Color Emoji", "Noto Emoji", "Noto Color Emoji", Times, Symbola, Aegyptus, Code2000, Code2001, Code2002, Musica, serif, LastResort},
 );
 
 $weights: (

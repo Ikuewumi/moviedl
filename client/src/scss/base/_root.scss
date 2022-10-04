@@ -1,3 +1,5 @@
+@use '../abstracts/mixins' as *;
+
 * {
    margin: 0;
    padding: 0;
@@ -18,12 +20,55 @@ body {
       background-color: var(--clr-blue);
       color: var(--clr-white);
    }
+
+   &::-webkit-scrollbar {
+      background: hsla(170, 47%, 77%, 0.82);
+      width: 15px;
+      padding: 5px // box-shadow: 0 -2px 1px rgb(0 0 0 / 0.5);
+   }
+
+   &::-webkit-scrollbar-track {
+      width: 10px;
+
+   }
+
+
+
+   &::-webkit-scrollbar-thumb {
+      // width: 10px;
+      border-radius: 5vmax;
+      background: #19292d59;
+      box-shadow: 0 0 1px rgb(0 0 0 / 0.5);
+
+   }
+
+   font-size: 13px;
+
+   @include mq(small) {
+      font-size: 10px;
+   }
+
 }
 
 body, #app {
    width: 100vw;
    min-height: 100vh;
    overflow-x: hidden;
+
+      
+   @include mq(small) {
+
+      --f-size-normal: 0.98rem;
+      --f-size-tiny: clamp(0.65rem, 0.75rem + 2%, 0.85rem);
+      --f-size-small: clamp(0.8rem, 0.75rem + 4%, 0.95rem);
+      --f-size-m-medium: clamp(0.85rem, 0.85rem + 2%, 1.05rem);
+      --f-size-medium: clamp(0.95rem, 0.95rem + 3%, 1rem);
+      --f-size-m-big: clamp(1.15rem, 1.15rem + 3%, 1.4rem);
+      --f-size-a-big: clamp(1.2rem, 1.2rem + 4%, 1.6rem);
+      --f-size-big: clamp(1.4rem, 1.4rem + 2vw, 1.9rem);
+      --f-size-bigger: clamp(1.8rem, 1.8rem + 2vw, 2.3rem);
+      --f-size-large: clamp(2rem, 2rem + 5vmax, 3.5rem)
+   }
 }
 
 img {
@@ -36,4 +81,30 @@ a {
 
 input {
    outline: none;
+}
+
+input,
+select,
+textarea {
+   padding-inline: var(--size-1);
+   padding-block: var(--size-1);
+   // border: none;
+   outline: none;
+   min-width: 0;
+}
+
+button {
+   outline: none;
+   border: none;
+   cursor: pointer;
+}
+
+.season {
+   outline: 1px solid #ddd;
+   background: var(--clr-gray-l);
+
+   &.active {
+      background: var(--clr-blue);
+      color: var(--clr-white);
+   }
 }

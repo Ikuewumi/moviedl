@@ -34,3 +34,8 @@ export const vpassword = async (password: string) => {
    if (regexObject.password.test(password)) return password
    throw Error('password must be at least 6 characters')
 }
+
+export const vimdbid = async (id: string) => {
+   if (regexObject.imdbId.test(id)) return id
+   throw Error('Invalid imdBid')
+}

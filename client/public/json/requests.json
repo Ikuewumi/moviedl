@@ -1,0 +1,26 @@
+[
+   {
+      "imdbID": "tt6723592",
+      "Title": "Tenet",
+      "Type": "movie",
+      "votes": 1
+   },
+   {
+      "imdbID": "tt1405406",
+      "Title": "The Vampire Diaries",
+      "Type": "series",
+      "votes": 20
+   },
+   {
+      "imdbID": "tt4474344",
+      "Title": "Blindspot",
+      "Type": "series",
+      "votes": 10
+   },
+   {
+      "imdbID": "tt0944947",
+      "Title": "Game Of Thrones",
+      "Type": "series",
+      "votes": 100
+   }
+]

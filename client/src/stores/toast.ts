@@ -19,7 +19,7 @@ const useToast = defineStore('useToast', {
          clearTimeout(this.timeout)
 
          this.error = x
-         this.msg = message
+         this.msg = message ?? 'Something went wrong'
 
          this.timeout = setTimeout(
             () => { this.msg = '' }, 2000

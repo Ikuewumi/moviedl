@@ -1,58 +1,40 @@
 <template>
    <Featured />
    <ul class="pin-6 pbl-7 mt-5 grid g-5 pb-6" data-card-list>
-      <Card v-for="(d, i) in arr" :data="d" :key="i" />
+      <Card v-for="(d, i) in data" :data="d" :key="i" />
    </ul>
+   {{ computedDone }}
+   {{ state }}
+
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Featured from '../../components/card/Featured.vue';
 import Card from '../../components/card/Card.vue';
 import { ref } from '@vue/reactivity';
+import { inject } from 'vue';
+import type { BaseFilm } from '@/composables/types';
+import { apiGet } from '@/composables/auth';
 
-const arr = ref([
-   {
-      plot: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex architecto exercitationem odit porro necessitatibus distinctio dolorum quo repellat eveniet fuga!',
-      title: 'The Time Traveller\'s wife',
-      poster: 'img1.jpg',
-      year: '2022'
-   },
+const state = $ref({
+   title: inject('title') as Function,
+   page: 1,
+   count: 0,
+   increment: 20
+})
 
-   {
-      plot: 'dolor sit amet consectetur adipisicing elit. Ex architecto exercitationem odit porro necessitatibus distinctio dolorum quo repellat eveniet fuga!',
-      title: 'Boruto: Naruto Next Generations',
-      poster: 'img2.jpg',
-      year: '2012-2016'
-   },
+const computedDone = $computed(() => {
+   return (state.page * state.increment) >= state.count
+})
 
-   {
-      plot: 't amet consectetur adipisicing elit. Ex architecto exercitationem odit porro necessitatibus distinctio dolorum quo repellat eveniet fuga!',
-      title: 'Man Of Recaps',
-      poster: 'img4.jpg',
-      year: '2014'
-   },
+state.title('Home Page')
 
-   {
-      plot: 't amet consectetur adipisicing elit. Ex architecto exercitationem odit porro necessitatibus distinctio dolorum quo repellat eveniet fuga!',
-      title: 'Good will studios',
-      poster: 'img3.jpg',
-      year: '2014'
-   },
+let data = $ref([] as BaseFilm<string[]>[])
+const x = await apiGet(`pages/home?page=${state.page}`)
+state.count = x.count
+state.page = x.page
+data = x.data as BaseFilm<string[]>[]
 
-   {
-      plot: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex architecto exercitationem odit porro necessitatibus distinctio dolorum quo repellat eveniet fuga!',
-      title: 'The Time Traveller\'s wife',
-      poster: 'img1.jpg',
-      year: '2022'
-   },
-
-   {
-      plot: 'dolor sit amet consectetur adipisicing elit. Ex architecto exercitationem odit porro necessitatibus distinctio dolorum quo repellat eveniet fuga!',
-      title: 'Boruto: Naruto Next Generations',
-      poster: 'img2.jpg',
-      year: '2012-2016'
-   },
-])
 </script>
 
 <style lang="scss">

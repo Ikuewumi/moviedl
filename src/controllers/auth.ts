@@ -43,7 +43,7 @@ export const login: Handler = async (
    next: NextFunction
 ) => {
    try {
-      console.log(req.body)
+      
       if (!checkUser(req.body)) return sendMsg(res, "Name or email invalid");
 
       const user = await findOne(User, { email: req.body.email });

@@ -6,7 +6,7 @@ const toast = useToast()
 
 const animObject = {
    off: {
-      duration: 1,
+      duration: 0.15,
       y: '-60px',
       opacity: 0,
       ease: 'sine'
@@ -31,7 +31,7 @@ const [enter, leave] = gFactory(animObject.off, animObject.on)
          <span class="c-white f-size-tiny lh-1 ">
             {{ toast.getMsg }}
          </span>
-         <span class="f-emoji f-size-m-big cursor" tabindex="0" @click="toast.close">
+         <span class="f-e f-size-m-big cursor" tabindex="0" @click="toast.close">
             ✖
          </span>
       </div>

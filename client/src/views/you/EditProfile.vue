@@ -2,7 +2,7 @@
 import useUser from '@/stores/user';
 import useLoad from '@/stores/load';
 import useToast from '@/stores/toast';
-import { computed, onMounted, ref } from 'vue';
+import { computed, inject, onMounted, ref } from 'vue';
 import { selectImage } from '@/composables/form';
 import { vname } from '@/composables/form'
 import { apiPatch } from '@/composables/auth';
@@ -25,6 +25,8 @@ const data = computed(() => {
       img: iprofile.value
    }
 })
+
+const title = inject('title') as Function
 
 const f = async () => {
    try {
@@ -54,7 +56,7 @@ const checkProfile = async () => {
    try {
       await vname(data.value.name)
       x.value = true
-      console.log(data.value)
+
    }
    catch (e) { toast.show(e as string, true) }
    finally { loader.stop() }
@@ -71,6 +73,8 @@ const saveProfile = async () => {
    catch (e) { toast.show(e as string, true) }
    finally { loader.stop() }
 }
+
+title('Edit Profile')
 </script>
 
 
@@ -116,7 +120,7 @@ const saveProfile = async () => {
             <h1 class="lh-1 mt-2 min-auto f-size-big f-round">
                {{ data.name }}
             </h1>
-            <p class="lh-2 mt-2 min-auto" v-if="data.description">
+            <p class="lh-2 mt-2 min-auto f-size-normal" v-if="data.description">
                {{ data.description }}
             </p>
          </div>
@@ -135,6 +139,10 @@ const saveProfile = async () => {
       .field {
          padding-inline: var(--size-3);
          padding-block: var(--size-2);
+
+         .f-emoji {
+            align-self: start;
+         }
       }
 
 

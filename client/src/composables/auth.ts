@@ -1,4 +1,5 @@
 import { api, getToken } from "./env"
+// @TODO - Remove the loggers before deployment
 
 interface _Header {
    'method': 'GET' | 'POST' | 'PATCH' | 'DELETE' | 'PUT',
@@ -17,12 +18,10 @@ export async function apiGet(endpoint: string = '', auth: boolean = false) {
    if (auth) {
       const token = await getToken()
       headers.headers!.Authorization = `Bearer ${token}`
-      console.log('1')
    }
-   console.log('2')
 
    const res: Response = await fetch(`${api}/api/${endpoint}`, headers as RequestInit)
-   console.log('works', res)
+
    const json = await res.json()
    if (!res.ok) return Promise.reject(json?.msg)
    return json
@@ -44,7 +43,7 @@ export async function apiPost(endpoint: string = '', payload: object = {}, auth 
 
    const res: Response = await fetch(`${api}/api/${endpoint}`, headers as RequestInit)
 
-   console.log(res)
+
 
    const json = await res.json()
    if (!res.ok) return Promise.reject(json?.msg)
@@ -64,6 +63,8 @@ export async function apiPatch(endpoint: string = '', payload: object = {}) {
    }
 
    const res: Response = await fetch(`${api}/api/${endpoint}`, headers as RequestInit)
+
+
    const json = await res.json()
    if (!res.ok) return Promise.reject(json?.msg)
    return json
@@ -81,6 +82,7 @@ export async function apiDelete(endpoint: string = '', payload: object = {}) {
    }
 
    const res: Response = await fetch(`${api}/api/${endpoint}`, headers as RequestInit)
+
    const json = await res.json()
    if (!res.ok) return Promise.reject(json?.msg)
    return json

@@ -1,3 +1,5 @@
+import { regexObject } from "./env"
+
 export function map<Input, Output>(
    arr: Input[],
    func: (arg?: Input, currentIndex?: number, array?: Input[]) => Output
@@ -29,8 +31,17 @@ export function reduce<Input, Output>(
 export async function validateId(id: string = '') {
    const isValid =
       typeof id === 'string' &&
-      id.length === 24
+      id?.length === 24
 
    if (isValid) return id
    Promise.reject('Invalid Id')
+}
+
+export function vId(id: string = '') {
+   const isValid =
+      typeof id === 'string' &&
+      id?.length === 24 &&
+      regexObject.dbid.test(id)
+
+   return isValid
 } 

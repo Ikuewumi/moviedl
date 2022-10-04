@@ -22,12 +22,16 @@ const routes = [
    createRoute('you', '/you', 'main/You'),
    createRoute('request', '/request', 'main/Request'),
    createRoute('edit-profile', '/edit-profile', 'you/EditProfile'),
+   createRoute('start', '/start', 'you/Proxy'),
    createRoute('create', '/create', 'you/Create'),
    createRoute('edit', '/edit', 'you/Edit', true),
+   createRoute('all-requests', '/admin/requests', 'admin/Requests'),
    createRoute('movie', '/m/:id', 'public/Movie', true),
    createRoute('series', '/s/:id', 'public/Series', true),
+   createRoute('search', '/search', 'public/Search'),
    createRoute('not-found', '/:catchAll(.*)', 'public/NotFound'),
 ]
+
 
 const router = createRouter({
    history: createWebHistory(import.meta.env.BASE_URL),

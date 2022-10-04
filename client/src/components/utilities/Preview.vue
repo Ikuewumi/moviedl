@@ -2,7 +2,7 @@
    <div data-overlay class="w-full fixed z-7 grid a-center j-center g-2 bg-gray-t" @click.self="$emit('close')"
       v-if="show">
       <section class="z-6 grid" data-preview>
-         <div class="heading flex a-center j-between pbl-3 pin-6">
+         <div class="heading flex a-center j-between pbl-3 pad">
             <h2 class="f-round f-size-big weight-thin">
                <slot name="title">Preview</slot>
             </h2>
@@ -14,8 +14,8 @@
                <h1>Some Preview Content</h1>
             </slot>
          </div>
-         <div class="pin-6 pbl-3" data-form>
-            <button class="f-round pbl-4 f-size-a-big cursor br-2" @click="$emit('done')">
+         <div class="pad pbl-3" data-form>
+            <button class="f-round pbl-3 f-size-m-big cursor br-2" @click="$emit('done')">
                <slot name="btn">Save</slot>
             </button>
          </div>
@@ -39,8 +39,10 @@ defineEmits(['close', 'done'])
 </script>
 
 <style lang="scss">
+@use '@/scss/abstracts/mixins' as *;
+
 [data-preview] {
-   width: min(600px, 80vw);
+   width: min(600px, 95vw);
    // max-width: 90vw;
    background: #fff;
 
@@ -86,6 +88,18 @@ defineEmits(['close', 'done'])
          object-fit: cover;
          height: 100%;
          border-radius: 1.6vmax;
+      }
+   }
+
+   .pad {
+      padding-inline: var(--size-6);
+
+      @include mq(medium) {
+         padding-inline: var(--size-4);
+      }
+
+      @include mq(small) {
+         padding-inline: var(--size-3);
       }
    }
 }

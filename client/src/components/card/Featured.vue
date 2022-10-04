@@ -1,161 +1,44 @@
 <script setup lang="ts">
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/all';
-import { onMounted } from 'vue';
-gsap.registerPlugin(ScrollTrigger)
-
+import { apiGet } from '@/composables/auth';
+import type { BaseFilm } from '@/composables/types';
 const cr = () => Math.floor(Math.random() * 15)
 
-const logo = $computed(() => {
-   return `../src/assets/img${cr()}.jpg`
-})
+let data = $ref([] as BaseFilm<string[]>[])
+data = await apiGet('public/featured') as BaseFilm<string[]>[]
 
-const obj = $ref([
-   {
-      plot: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex architecto exercitationem odit porro necessitatibus distinctio dolorum quo repellat eveniet fuga!',
-      title: 'The Time Traveller\'s wife',
-      poster: 'img1.jpg',
-      year: '2022'
-   },
-
-   {
-      plot: 'dolor sit amet consectetur adipisicing elit. Ex architecto exercitationem odit porro necessitatibus distinctio dolorum quo repellat eveniet fuga!',
-      title: 'Boruto: Naruto Next Generations',
-      poster: 'img2.jpg',
-      year: '2012-2016'
-   },
-
-   {
-      plot: 't amet consectetur adipisicing elit. Ex architecto exercitationem odit porro necessitatibus distinctio dolorum quo repellat eveniet fuga!',
-      title: 'Man Of Recaps',
-      poster: 'img4.jpg',
-      year: '2014'
-   },
-
-   {
-      plot: 't amet consectetur adipisicing elit. Ex architecto exercitationem odit porro necessitatibus distinctio dolorum quo repellat eveniet fuga!',
-      title: 'Good will studios',
-      poster: 'img3.jpg',
-      year: '2014'
-   },
-
-   {
-      plot: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex architecto exercitationem odit porro necessitatibus distinctio dolorum quo repellat eveniet fuga!',
-      title: 'The Time Traveller\'s wife',
-      poster: 'img1.jpg',
-      year: '2022'
-   },
-
-   {
-      plot: 'dolor sit amet consectetur adipisicing elit. Ex architecto exercitationem odit porro necessitatibus distinctio dolorum quo repellat eveniet fuga!',
-      title: 'Boruto: Naruto Next Generations',
-      poster: 'img2.jpg',
-      year: '2012-2016'
-   },
-])
+const type = (x: string = '') => {
+   return x === 'movie' ? 'm' : 's'
+}
 
 
-onMounted(() => {
-   const a = document.querySelector('#carousel')
-   console.dir(a)
-   let sections = gsap.utils.toArray('#carousel .card-featured')
-
-   //xPercent: -100 * (sections.length - 1),
-   gsap.to(sections, {
-      ease: 'none',
-      scrollTrigger: {
-         trigger: '#carousel .card-featured',
-         scrub: 1,
-         snap: 1 / (sections.length),
-         horizontal: true,
-         toggleActions: 'restart pause reverse pause',
-         start: '0% 0%',
-         scroller: '#carousel',
-         end: () => document.getElementById('carousel')!.scrollWidth,
-         id: 'my-carousel',
-      } as ScrollTrigger.Vars,
-      duration: 1,
-   })
-
-})
 </script>
 
 <template>
-   <div id="carousel" class="carousel grid">
+   <div id="carousel" class="carousel grid relative pb-4" :style="`--n: ${data.length ?? 0}`">
 
-      <div class="card-featured grid a-center j-center br-5 relative">
-         <img :src="`../src/assets/img${cr()}.jpg`" class="br-5" />
+      <div class="card-featured grid a-center j-center br-5 relative" v-for="(movie, i) in data" :key="i">
+         <img :src="movie.Poster" class="br-5" />
          <section class="content relative grid g-2 pin-3 pbl-6 br-6 c-white">
             <div class="grid g-2">
-               <h1 class="f-round f-size-big">House of the Dragon<small class="pl-1 f-size-normal weight-thin">2022
-                     -</small></h1>
+               <router-link :to="`${type(movie.Type)}/${movie.imdbID}`" class="f-round f-size-big weight-bold c-white">
+                  {{
+                  movie.Title
+                  }}<small class="pl-1 f-size-normal weight-thin">{{
+                  movie.Year
+                  }}</small></router-link>
                <p class="lh-1">
-                  Nine noble families fight for control over the lands of Westeros, while an ancient enemy returns after
-                  being
-                  dormant for millennia.
+                  {{ movie.Plot }}
                </p>
                <span>
                   <span class="f-emoji">⭐</span>
-                  8.7
+                  {{ movie.imdbRating }}
                </span>
                <div class="flex flex-wrap g-1 f-size-tiny">
-                  <span class="pin-2 pbl-1 f-round br-3 bg-gray-dtt c-white">Action</span>
-                  <span class="pin-2 pbl-1 f-round br-3 bg-gray-dtt c-white">Adventure</span>
-                  <span class="pin-2 pbl-1 f-round br-3 bg-gray-dtt c-white">Myth</span>
+                  <span class="pin-2 pbl-1 f-round br-3 bg-gray-dtt c-white" v-for="(g, i) in movie.Genre" :key="i">{{ g
+                  }}</span>
                </div>
             </div>
 
-
-         </section>
-      </div>
-
-      <div class="card-featured grid a-center j-center br-5 relative">
-         <img :src="`../src/assets/img${cr()}.jpg`" class="br-5" />
-         <section class="content relative grid g-2 pin-3 pbl-6 br-6 c-white">
-            <div class="grid g-2">
-               <h1 class="f-round f-size-big">House of the Dragon<small class="pl-1 f-size-normal weight-thin">2022
-                     -</small></h1>
-               <p class="lh-1">
-                  Nine noble families fight for control over the lands of Westeros, while an ancient enemy returns after
-                  being
-                  dormant for millennia.
-               </p>
-               <span>
-                  <span class="f-emoji">⭐</span>
-                  8.7
-               </span>
-               <div class="flex flex-wrap g-1 f-size-tiny">
-                  <span class="pin-2 pbl-1 f-round br-3 bg-gray-dtt c-white">Action</span>
-                  <span class="pin-2 pbl-1 f-round br-3 bg-gray-dtt c-white">Adventure</span>
-                  <span class="pin-2 pbl-1 f-round br-3 bg-gray-dtt c-white">Myth</span>
-               </div>
-            </div>
-
-
-         </section>
-      </div>
-
-      <div class="card-featured grid a-center j-center br-5 relative">
-         <img :src="`../src/assets/img${cr()}.jpg`" class="br-5" />
-         <section class="content relative grid g-2 pin-3 pbl-6 br-6 c-white">
-            <div class="grid g-2">
-               <h1 class="f-round f-size-big">House of the Dragon<small class="pl-1 f-size-normal weight-thin">2022
-                     -</small></h1>
-               <p class="lh-1">
-                  Nine noble families fight for control over the lands of Westeros, while an ancient enemy returns after
-                  being
-                  dormant for millennia.
-               </p>
-               <span>
-                  <span class="f-emoji">⭐</span>
-                  8.7
-               </span>
-               <div class="flex flex-wrap g-1 f-size-tiny">
-                  <span class="pin-2 pbl-1 f-round br-3 bg-gray-dtt c-white">Action</span>
-                  <span class="pin-2 pbl-1 f-round br-3 bg-gray-dtt c-white">Adventure</span>
-                  <span class="pin-2 pbl-1 f-round br-3 bg-gray-dtt c-white">Myth</span>
-               </div>
-            </div>
 
          </section>
       </div>
@@ -167,19 +50,59 @@ onMounted(() => {
 
 
 <style lang="scss">
+@use '../../scss/abstracts/mixins' as *;
+
 .carousel {
    grid-auto-flow: column;
-   grid-template-columns: repeat(3, 100%);
+   grid-auto-columns: 100%;
    overflow-x: auto;
+   scroll-snap-type: x mandatory;
    // overflow-x: hidden;
    overflow-y: hidden;
+
+   @include mq(small) {
+      padding-bottom: var(--size-2)
+   }
+
    // overflow-y: ;
+   &::-webkit-scrollbar {
+      background: hsla(0, 0%, 87%, 0.82);
+      border-radius: 3vmax;
+      height: 15px;
+   }
+
+   &::-webkit-scrollbar-track {
+      width: 10px;
+
+   }
+
+
+
+   &::-webkit-scrollbar-thumb {
+      // width: 10px;
+      border-radius: 5vmax;
+      background: #19292d59;
+      box-shadow: 0 0 1px rgb(0 0 0 / 0.5);
+
+   }
 }
 
 .card-featured {
    grid-template-areas: "featured";
    height: 500px;
+   padding: var(--size-2);
+
+   p {
+      font-size: var(--f-size-medium);
+   }
+
+   @include mq(small) {
+      padding: var(--size-1)
+   }
+
    width: 100%;
+   scroll-snap-align: start;
+   scroll-behavior: smooth;
 
    &:hover::after {
       opacity: 0.6;
@@ -203,7 +126,7 @@ onMounted(() => {
 
    img {
       object-fit: cover;
-      object-position: center;
+      object-position: top center;
       width: 100%;
       height: 500px;
       z-index: 1;

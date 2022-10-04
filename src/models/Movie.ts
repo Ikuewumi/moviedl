@@ -13,61 +13,64 @@ const Movie = new Schema({
    },
 
    //metainfo
-   title: {
+   Title: {
       required: true,
       type: String
    },
-   type: {
+   Type: {
       required: true,
       type: String
    },
-   year: {
+   Year: {
       required: true,
       type: String
    },
-   poster: {
+   Poster: {
       required: true,
       type: String
    },
 
    //more info
-   actors: {
+   Actors: {
       required: true,
       type: Array
    },
-   genres: {
+   Country: Array,
+   Genre: {
       required: true,
       type: Array
    },
-   plot: {
+   Plot: {
       required: true,
       type: String
    },
-   writers: {
+   Writer: {
       required: true,
-      type: String
+      type: Array
    },
-   director: String,
-   awards: String,
+   Director: String,
+   Awards: String,
 
    // times
-   runtime: {
+   Runtime: {
       required: true,
       type: String
    },
-   released: {
+   Released: {
       required: true,
       type: String
    },
-   language: {
+   Language: {
       required: true,
-      type: String
+      type: Array
    },
 
    //movie and series specific fields, respectively
+   MovieLinks: { type: Array },
+   SeriesLinks: { type: Array },
    dvd: String,
    totalSeasons: Number,
-})
+}, { timestamps: true })
 
 
 const m = model("movie", Movie);
