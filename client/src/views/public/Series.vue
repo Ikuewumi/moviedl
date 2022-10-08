@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { validateId } from '@/composables/abstract';
 import { apiGet } from '@/composables/auth';
-import { ref, inject, computed, watchEffect } from 'vue';
+import { ref, inject, computed, watchEffect, watch, onErrorCaputured } from 'vue';
 import { regexObject } from '@/composables/env';
 import Link from '@/components/public/Link.vue';
 import Metadata from '@/components/public/Metadata.vue';
@@ -44,14 +44,16 @@ const func = async () => await apiGet(`public/${state.type}/${state.imdbID}`)
 data = await wrapFn('Loading Series details...', func) ?? {}
 
 const updateDetails = async () => {
+   console.log('fired')
    data = {} as unknown as Series<string[]>
-   const func = async () => await apiGet(`public/${state.type}/${state.imdbID}`)
+   const func = async () => await apiGet(`public/${state.type}/${route.params.id}`)
    data = await wrapFn('Loading Movie details', func) ?? {}
 }
 
-watchEffect(() => {
-   if (route.path) {
-      data = {} as unknown as Series<string[]>
+
+watch(route, () => {
+   if (route.name === 'series' && route.params.id !== props.id) {
+      console.log('changed',)
       updateDetails()
    }
 })
@@ -67,7 +69,7 @@ const formatDate = (x: string) => {
 
 const user = useUser()
 
-
+onErrorCaptured()
 
 </script>
 

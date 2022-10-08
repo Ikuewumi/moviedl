@@ -1,4 +1,5 @@
-export const api = 'http://localhost:5000'
+// export const api = 'http://localhost:5000'
+export const api = window.location.origin.startsWith('http://localhost:') ? 'http://localhost:5000' : window.location.origin
 
 export async function getToken() {
    const x = localStorage.getItem('moviedl')

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import errorimg from '@/assets/youre_lost.svg'
 defineProps({
    msg: {
       type: String,
@@ -11,20 +12,29 @@ defineProps({
 })
 </script>
 <template>
-   <div class="grid g-4 a-center j-center" data-error>
-      <span class="f-emoji">✖</span>
-      <p class="c-gray-d text-center weight-medium">{{ msg }}</p>
-      <RouterLink :to="link" class="f-round pin-6 pbl-2 mt-4 br-6">
-         <slot>Go Home</slot>
-      </RouterLink>
+   <div class="flex a-center j-center" data-error>
+      <div class="container-err grid g-2 a-center j-center">
+
+         <img :src="errorimg" alt="">
+         <p class="c-gray-d text-center weight-medium">{{ msg }}</p>
+         <RouterLink :to="link" class="f-round pin-6 pbl-2 mt-4 br-6">
+            <slot>Go Home</slot>
+         </RouterLink>
+      </div>
    </div>
 </template>
 
 
 <style lang="scss">
 [data-error] {
-   &>* {
+   min-height: 70vh;
+
+   .container-err {
       max-width: 70vw;
+   }
+
+   img {
+      width: min(200px, 60vw);
    }
 
    .f-emoji {

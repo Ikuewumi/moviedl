@@ -24,22 +24,19 @@ const useUser = defineStore('useUser', {
 
    actions: {
       async refreshUser() {
-         try { this.user = await apiGet('user', true) }
-         catch (e) { this.user = {} }
-         finally { return this.user }
+         this.user = {}
+         const data = await apiGet('user', true)
+         this.user = data
       },
 
       async signUp(user: { name: string, email: string, password: string }) {
-         try {
-            await apiPost('auth/signup', user)
-            const token = await apiPost('auth/login', {
-               email: user.email,
-               password: user.password
-            })
-            setToken(token)
-            return this.refreshUser()
-         }
-         catch (e) { }
+         await apiPost('auth/signup', user)
+         const token = await apiPost('auth/login', {
+            email: user.email,
+            password: user.password
+         })
+         setToken(token)
+         return this.refreshUser()
       }
 
    }

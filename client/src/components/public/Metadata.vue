@@ -97,7 +97,7 @@ const ratingEl = ref({} as Element)
       display: grid;
       place-items: center;
       background: #fff;
-      border-radius: 1.2vmax;
+      border-radius: 50%;
 
 
       &::before,
@@ -107,9 +107,8 @@ const ratingEl = ref({} as Element)
 
          inset: 50% auto auto 50%;
          transform: translate(-50%, -50%);
-         // border-radius: 50%;
          background: var(--clr-white);
-         border-radius: 1.2vmax;
+         border-radius: 50%;
 
       }
 

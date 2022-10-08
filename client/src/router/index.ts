@@ -1,35 +1,90 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 
-const createLink = (link: string) => `../views/${link}.vue`
-const createRoute = (name: string, path: string, component: string, props = false): RouteRecordRaw => {
-   return {
-      name, path: `${path}`,
-      component: () => import(/* @vite-ignore */createLink(component)),
-      props
-   }
-}
-const redirect = (from: string, to: string): RouteRecordRaw => {
-   return {
-      path: `${from}`,
-      redirect: `${to}`
-   }
-}
-
 const routes = [
-   createRoute('home', '/', 'main/Home'),
-   createRoute('index', '/index', 'main/Index'),
-   createRoute('about', '/about', 'main/About'),
-   createRoute('you', '/you', 'main/You'),
-   createRoute('request', '/request', 'main/Request'),
-   createRoute('edit-profile', '/edit-profile', 'you/EditProfile'),
-   createRoute('start', '/start', 'you/Proxy'),
-   createRoute('create', '/create', 'you/Create'),
-   createRoute('edit', '/edit', 'you/Edit', true),
-   createRoute('all-requests', '/admin/requests', 'admin/Requests'),
-   createRoute('movie', '/m/:id', 'public/Movie', true),
-   createRoute('series', '/s/:id', 'public/Series', true),
-   createRoute('search', '/search', 'public/Search'),
-   createRoute('not-found', '/:catchAll(.*)', 'public/NotFound'),
+   {
+      "name": "home",
+      "path": "/",
+      "component": () => import("../views/main/Home.vue"),
+      "props": false
+   },
+   {
+      "name": "index",
+      "path": "/index",
+      "component": () => import("../views/main/Index.vue"),
+      "props": false
+   },
+   {
+      "name": "about",
+      "path": "/about",
+      "component": () => import("../views/main/About.vue"),
+      "props": false
+   },
+   {
+      "name": "you",
+      "path": "/you",
+      "component": () => import("../views/main/You.vue"),
+      "props": false
+   },
+   {
+      "name": "request",
+      "path": "/request",
+      "component": () => import("../views/main/Request.vue"),
+      "props": false
+   },
+   {
+      "name": "edit-profile",
+      "path": "/edit-profile",
+      "component": () => import("../views/you/EditProfile.vue"),
+      "props": false
+   },
+   {
+      "name": "start",
+      "path": "/start",
+      "component": () => import("../views/you/Proxy.vue"),
+      "props": false
+   },
+   {
+      "name": "create",
+      "path": "/create",
+      "component": () => import("../views/you/Create.vue"),
+      "props": false
+   },
+   {
+      "name": "edit",
+      "path": "/edit",
+      "component": () => import("../views/you/Edit.vue"),
+      "props": true
+   },
+   {
+      "name": "all-requests",
+      "path": "/admin/requests",
+      "component": () => import("../views/admin/Requests.vue"),
+      "props": false
+   },
+   {
+      "name": "movie",
+      "path": "/m/:id",
+      "component": () => import("../views/public/Movie.vue"),
+      "props": true
+   },
+   {
+      "name": "series",
+      "path": "/s/:id",
+      "component": () => import("../views/public/Series.vue"),
+      "props": true
+   },
+   {
+      "name": "search",
+      "path": "/search",
+      "component": () => import("../views/public/Search.vue"),
+      "props": false
+   },
+   {
+      "name": "not-found",
+      "path": "/:catchAll(.*)",
+      "component": () => import("../views/public/NotFound.vue"),
+      "props": false
+   }
 ]
 
 

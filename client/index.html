@@ -5,22 +5,87 @@
    <meta charset="UTF-8" />
    <link rel="icon" href="/logo.svg" type="data/svg+xml" />
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <!-- 
-      @TODO: Add Google Fonts 'Urbanist, Open Sans Work Sans, Ubuntu and Noto Color Emoji'
-    -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Noto+Emoji&family=Poppins&family=Ubuntu&family=Urbanist:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+   <script src="https://ikuewumi.github.io/wc/js/attribution.js"></script>
    <title>MovienSeriesDl</title>
 </head>
 
 <body>
+   <div id="loader">
+      <div class="l">
+
+         <svg viewBox="0 0 24 24">
+            <use href="#logo"></use>
+         </svg>
+      </div>
+
+   </div>
+
    <div id="app" class="f-normal"></div>
    <div id="modal" class="f-normal"></div>
+   <wc-attribution link="https://github.com/Ikuewumi/moviedl"></wc-attribution>
    <script type="module" src="/src/main.ts"></script>
 
-   <svg>
+   <svg style="display: none;">
       <symbol id="logo" viewBox="0 0 24 24">
          <path d="M5.75 3 A 1.0001 1.0001 0 0 0 4.8867188 3.4960938L3.1367188 6.4960938 A 1.0001 1.0001 0 0 0 3 7L3 19C3 20.093063 3.9069372 21 5 21L19 21C20.093063 21 21 20.093063 21 19L21 7 A 1.0001 1.0001 0 0 0 20.863281 6.4960938L19.113281 3.4960938 A 1.0001 1.0001 0 0 0 18.25 3L5.75 3 z M 6.3242188 5L17.675781 5L18.841797 7L5.1582031 7L6.3242188 5 z M 11 10L13 10L13 14L16 14L12 18L8 14L11 14L11 10 z" />
       </symbol>
    </svg>
+
+
+
+   <style>
+      #loader {
+         width: 100vw;
+         height: 100vh;
+         inset: 0 auto auto 0;
+         position: fixed;
+         z-index: 200;
+         background: rgba(255, 255, 255, 0.94);
+         display: grid;
+         place-items: center;
+         text-align: center;
+         font-family: 'Poppins', sans-serif;
+         font-size: 15px;
+      }
+
+      * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+      }
+
+      #loader .l {
+         width: fit-content;
+         display: grid;
+         place-items: center;
+         text-align: center;
+         letter-spacing: 2px;
+      }
+
+      #loader svg {
+         transition: transform 1s ease-in-out;
+         width: min(70px, 40vw);
+         fill: #5196A6;
+         animation: rotate-loader 1.5s ease-in-out alternate infinite;
+      }
+
+      @keyframes rotate-loader {
+         from {
+            transform: translateY(0);
+         }
+         to {
+            transform: translateY(10%);
+            
+         }
+      }
+
+
+
+   </style>
+
 </body>
 
 </html>

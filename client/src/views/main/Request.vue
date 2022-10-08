@@ -98,29 +98,27 @@ const request = async () => {
       }
       await wrapFn('Requesting...', func)
    }
-   catch (e) { 
    finally { return stopAlert() }
+}
+
+const search = async () => {
+   try {
+      if (!regexObject.imdbId.test(state.term)) {
+         state.term = ''
+         throw Error('Search term must be a vaild imdbID')
+      }
+
+      data = await wrapFn('Searching...', searchFunc)
 
    }
 
-   const search = async () => {
-      try {
-         if (!regexObject.imdbId.test(state.term)) {
-            state.term = ''
-            throw Error('Search term must be a vaild imdbID')
-         }
-
-         data = await wrapFn('Searching...', searchFunc)
-
-      }
-
-      catch (e) {
-         state.pinia.toast.show(String(e), true)
-      }
+   catch (e) {
+      state.pinia.toast.show(String(e), true)
    }
+}
 
-   state.title('Request Page')
-   const user = useUser()
+state.title('Request Page')
+const user = useUser()
 </script>
 
 <style lang="scss">

@@ -1,6 +1,6 @@
 import { Response, Request, Router } from "express"
 import { isValidObjectId, ObjectId } from "mongoose"
-import { checkImdbID, sendMsg, sendObj, UserReq } from "../composables"
+import { checkImdbID, sendMsg, sendObj, UserReq, vAdmin, limitAPIRateFn } from "../composables"
 import { exists, find, findOne, removeOne, updateOne } from "../composables/db"
 import { verify, verifyAdmin } from "../controllers/auth"
 import Film from "../models/Film"
@@ -50,8 +50,10 @@ const updateRequest = async (res: Response, imdbID: string) => {
 }
 
 const router = Router()
+router.use(verify)
+const limit = limitAPIRateFn(5)
 
-router.post('/:id', checkImdbID, verify, async (req: UserReq, res: Response) => {
+router.post('/:id', checkImdbID, limit, async (req: UserReq, res: Response) => {
    try {
       const valid = await exists(Movie, { imdbID: req.params.id })
       if (valid) return sendMsg(res, 'Movie is already present', 400)
@@ -67,9 +69,10 @@ router.post('/:id', checkImdbID, verify, async (req: UserReq, res: Response) => 
 
 })
 
+router.use(vAdmin)
 
 
-router.get('/', verifyAdmin, async (req: UserReq, res: Response) => {
+router.get('/', async (req: UserReq, res: Response) => {
    try {
       const pageNumber = extractPageNumber(req)
       const data = await find(
@@ -83,7 +86,7 @@ router.get('/', verifyAdmin, async (req: UserReq, res: Response) => {
    catch (e) { return sendMsg(res, String(e), 500) }
 })
 
-router.get('/:id', checkImdbID, verify, async (req: UserReq, res: Response) => {
+router.get('/:id', checkImdbID, async (req: UserReq, res: Response) => {
    try {
       const valid = await exists(Movie, { imdbID: req.params.id })
       if (valid) return sendMsg(res, 'Movie is already present', 400)
@@ -104,7 +107,7 @@ router.get('/:id', checkImdbID, verify, async (req: UserReq, res: Response) => {
    catch (e) { return sendMsg(res, String(e), 500) }
 })
 
-router.delete('/:id', checkImdbID, verifyAdmin, async (req: UserReq, res: Response) => {
+router.delete('/:id', checkImdbID, async (req: UserReq, res: Response) => {
    try {
       const data = await removeOne(
          RequestModel,

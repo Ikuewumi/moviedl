@@ -1,0 +1,1 @@
+[data-page-search]>h2{color:#aaa}[data-page-search] ul[data-card-list]{justify-content:center;align-items:flex-start;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));grid-auto-flow:dense}[data-page-search]>small{font-style:italic;color:#ccc}

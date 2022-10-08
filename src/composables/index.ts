@@ -1,5 +1,6 @@
 import mongoose, { Model, ObjectId } from "mongoose";
 import { Response, Request, NextFunction, Handler } from "express";
+import { rateLimit, RateLimitRequestHandler } from "express-rate-limit";
 
 export const formatArr = (str: string) => {
    const array = str.split(',').map(item => item.trim())
@@ -170,4 +171,26 @@ export const checkImdbID: Handler = (req: UserReq, res: Response, next: NextFunc
    if (!valid) return sendMsg(res, 'Invalid imdbID!', 400)
 
    next()
+}
+
+export const limitAPIRateFn = (n: number): Handler => {
+   const limiter = rateLimit({
+      windowMs: 24 * 60 * 6000,//One day,
+      max: n,
+      "message": {
+         msg: 'Too many requests. Please try again later'
+      }
+   })
+
+   return limiter
+}
+
+export const vAdmin: Handler = (req: UserReq, res: Response, next: NextFunction) => {
+   try {
+      const valid = Boolean(req?.userDoc?.admin)
+      if (!valid) throw Error('User not admin')
+
+      return next()
+   }
+   catch (e) { return sendMsg(res, 'User is not an admin', 401) }
 }

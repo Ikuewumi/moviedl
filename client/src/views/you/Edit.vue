@@ -5,7 +5,7 @@ import Search from '@/components/admin/Search.vue';
 import FormInput from '@/components/utilities/FormInput.vue'
 import useToast from '@/stores/toast';
 import { vimdbid } from '@/composables/form';
-import { inject, onMounted } from 'vue';
+import { inject, onMounted, onErrorCaptured } from 'vue';
 import useLoad from '@/stores/load';
 import Link from '@/components/admin/Link.vue';
 import LinksSeries from '@/components/admin/series/Links.vue';
@@ -43,6 +43,7 @@ const type = $computed(() => {
 
    return result
 })
+onErrorCaptured()
 
 const v = $computed(() => {
    if (!data) return false
@@ -100,7 +101,7 @@ const x = async () => {
       load.start('Loading Data...')
 
       await vimdbid(route.query?.imdbid as string)
-      data = await apiGet(`admin/${type}/${route.query?.imdbid as string}`)
+      data = await apiGet(`admin/${type}/${route.query?.imdbid as string}`, true)
       title('Edit Page - ' + data.Title)
 
 

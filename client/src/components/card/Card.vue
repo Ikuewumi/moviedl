@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { BaseFilm } from '@/composables/types';
-import image from '../../assets/img5.jpg';
 
 type Card = {
    plot: string;

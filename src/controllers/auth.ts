@@ -34,7 +34,9 @@ export const createUser: Handler = async (req: Request, res: Response) => {
       res.json({
          msg: `${req.body.email} was signed up`,
       });
-   } catch (e) { }
+   } catch (e) {
+      return sendMsg(res, 'Something went wrong in auth. Please try again later', 503)
+   }
 };
 
 export const login: Handler = async (
@@ -43,7 +45,7 @@ export const login: Handler = async (
    next: NextFunction
 ) => {
    try {
-      
+
       if (!checkUser(req.body)) return sendMsg(res, "Name or email invalid");
 
       const user = await findOne(User, { email: req.body.email });
@@ -59,7 +61,9 @@ export const login: Handler = async (
          req.token = authData;
          next();
       });
-   } catch (e) { }
+   } catch (e) {
+      return sendMsg(res, 'Something went wrong in auth. Please try again later', 503)
+   }
 };
 
 
@@ -92,7 +96,9 @@ export const verify: Handler = (
       )
 
    }
-   catch (e) { }
+   catch (e) {
+      return sendMsg(res, 'Something went wrong in auth. Please try again later', 503)
+   }
 }
 
 export const verifyAdmin: Handler = (
@@ -105,6 +111,8 @@ export const verifyAdmin: Handler = (
          req.headers['authorization'] &&
          req.headers['authorization'] > 'Bearer ' &&
          req.headers['authorization'].split(' ')[1] > ''
+
+      console.log(isPresent, req.headers['authorization'], req.headers)
 
       if (!isPresent) return sendMsg(res, 'The token is invalid', 401)
 
@@ -123,5 +131,7 @@ export const verifyAdmin: Handler = (
       )
 
    }
-   catch (e) { }
+   catch (e) {
+      return sendMsg(res, 'Something went wrong in auth. Please try again later', 503)
+   }
 }

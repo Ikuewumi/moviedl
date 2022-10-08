@@ -1,13 +1,21 @@
 import express, { Router, Application, Request, Response, NextFunction } from "express";
 import { isObjectIdOrHexString, isValidObjectId } from "mongoose";
-import { B, Codec, CustomHandler, CustomMovie, formatArr, Id, regexObject, Season, sendCode, sendMsg, sendObj, Series, UserReq, validateId, Movie_, checkImdbID } from "../composables";
+import { B, Codec, CustomHandler, CustomMovie, formatArr, Id, regexObject, Season, sendCode, sendMsg, sendObj, Series, UserReq, validateId, Movie_, checkImdbID, limitAPIRateFn, vAdmin } from "../composables";
 import { exists, findOne, updateOne } from "../composables/db";
+import { verifyAdmin, verify } from "../controllers/auth";
 import Movie from "../models/Movie";
-import { getMovie } from "./omdb";
+import { getMovie, getProcessedSeries } from "./omdb";
 
 const fetch = require("node-fetch")
 
 const router = Router();
+const limit = limitAPIRateFn(20)
+router.use(verify)
+router.use(vAdmin)
+router.use(limit)
+
+
+
 
 const isValidMovieRequest = (object: Movie_) => {
    if (!(object?.links && Array.isArray(object.links))) {
@@ -145,7 +153,7 @@ function updateEpisodeCount(db: Season[] = [], user: Season[] = []) {
 }
 
 // @TODO - Add admin verify middleware for prod.
-router.post('/movies/:id', checkImdbID, async (req: UserReq, res: Response) => {
+router.post('/movies/:id', checkImdbID, limit, async (req: UserReq, res: Response) => {
 
    try {
 
@@ -188,7 +196,7 @@ router.post('/movies/:id', checkImdbID, async (req: UserReq, res: Response) => {
 
 })
 
-router.post('/series/:id', checkImdbID, async (req: UserReq, res: Response) => {
+router.post('/series/:id', checkImdbID, limit, async (req: UserReq, res: Response) => {
 
    try {
 
@@ -204,9 +212,8 @@ router.post('/series/:id', checkImdbID, async (req: UserReq, res: Response) => {
       }
 
       // @TODO - Add calls to the actual omDB API
-      const response = await fetch(`${process.env.SERVER_URL}/api/omdb/series/${req.params.id}`)
-      if (!response.ok) return sendMsg(res, 'Could not find movie', 404)
-      const data = await response.json() as CustomMovie
+      const response = await getProcessedSeries(req.params.id, res)
+      const data = response as CustomMovie
 
       const data_ = new Movie({
          ...data,
@@ -338,13 +345,13 @@ router.get('/series/:id', checkImdbID, async (req: UserReq, res: Response) => {
       // @TODO - Call the omdbAPI movie
       const data: any = await findOne(Movie, obj)
       if (!isValidObjectId(data?._id)) return sendMsg(res, 'Could not find resource', 404)
-      const response = await fetch(`${process.env.SERVER_URL}/api/omdb/series/${req.params.id}`)
-      if (!response.ok) throw Error('somthing went wrong')
-      const payload: CustomMovie = await response.json()
+      const response = await getProcessedSeries(req.params.id, res)
+      const payload: CustomMovie = response as CustomMovie
       const data_ = {
          SeriesLinks: updateEpisodeCount(payload.SeriesLinks, data._doc.SeriesLinks),
          imdbRating: Number(payload.imdbRating),
-         Plot: payload.Plot
+         Plot: payload.Plot,
+         totalSeasons: Number(payload.totalSeasons)
       }
       const update = await updateOne(Movie, obj, { $set: data_ })
       if (!update) return sendMsg(res, 'Cannot edit at the moment. Please try again later', 404)

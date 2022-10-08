@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { apiGet } from '@/composables/auth';
 import type { BaseFilm } from '@/composables/types';
+import { onErrorCaptured, inject } from 'vue'
 const cr = () => Math.floor(Math.random() * 15)
 
+const wrapFn = inject('wrapFn')
+
 let data = $ref([] as BaseFilm<string[]>[])
-data = await apiGet('public/featured') as BaseFilm<string[]>[]
+data = await wrapFn('Loading Data...', async () => await apiGet('public/featured') ?? []) as BaseFilm<string[]>[]
+
+onErrorCaptured(e => console.error(e))
 
 const type = (x: string = '') => {
    return x === 'movie' ? 'm' : 's'
@@ -22,10 +27,10 @@ const type = (x: string = '') => {
             <div class="grid g-2">
                <router-link :to="`${type(movie.Type)}/${movie.imdbID}`" class="f-round f-size-big weight-bold c-white">
                   {{
-                  movie.Title
+                        movie.Title
                   }}<small class="pl-1 f-size-normal weight-thin">{{
-                  movie.Year
-                  }}</small></router-link>
+      movie.Year
+}}</small></router-link>
                <p class="lh-1">
                   {{ movie.Plot }}
                </p>

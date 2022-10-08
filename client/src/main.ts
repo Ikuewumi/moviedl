@@ -11,3 +11,6 @@ createApp(App)
    .use(custom)
    .use(router)
    .mount('#app')
+
+const initLoader = document.querySelector('#loader')
+initLoader?.remove()

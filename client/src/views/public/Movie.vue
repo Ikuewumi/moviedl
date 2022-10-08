@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { validateId } from '@/composables/abstract';
 import { apiGet } from '@/composables/auth';
-import { ref, inject, computed, watchEffect } from 'vue';
+import { ref, inject, computed, watchEffect, watch, onErrorCaptured } from 'vue';
 import { regexObject } from '@/composables/env';
 import Link from '@/components/public/Link.vue';
 import Metadata from '@/components/public/Metadata.vue';
@@ -46,12 +46,12 @@ state.title('Movie Page')
 
 const updateDetails = async () => {
    data = {} as unknown as Movie<string[]>
-   const func = async () => await apiGet(`public/${state.type}/${state.imdbID}`)
+   const func = async () => await apiGet(`public/${state.type}/${route.params.id}`)
    data = await wrapFn('Loading Movie details', func) ?? {}
 }
 
-watchEffect(() => {
-   if (route.path) {
+watch(route, () => {
+   if (route.name === 'movie' && route.params.id !== props.id) {
       updateDetails()
    }
 })
@@ -70,6 +70,8 @@ const formatDate = (x: string) => {
 }
 
 const user = useUser()
+
+onErrorCaptured()
 
 </script>
 

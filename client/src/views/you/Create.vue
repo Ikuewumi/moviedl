@@ -5,7 +5,7 @@ import Search from '@/components/admin/Search.vue';
 import FormInput from '@/components/utilities/FormInput.vue'
 import useToast from '@/stores/toast';
 import { vimdbid } from '@/composables/form';
-import { inject, onMounted } from 'vue';
+import { inject, onMounted, onErrorCaptured } from 'vue';
 import useLoad from '@/stores/load';
 import Link from '@/components/admin/Link.vue';
 import LinksSeries from '@/components/admin/series/Links.vue';
@@ -99,7 +99,7 @@ const x = async () => {
       load.start('Loading Data...')
 
       await vimdbid(route.query?.imdbid as string)
-      data = await apiGet(`omdb/${type}/${route.query?.imdbid as string}`)
+      data = await apiGet(`omdb/${type}/${route.query?.imdbid as string}`, true)
 
       title('Create Page - ' + data.Title)
 
@@ -185,10 +185,7 @@ function sRemoveLink(options: HybridOptions) {
 
 }
 
-const funct = (...args: any) => {
-
-
-}
+onErrorCaptured()
 
 
 // MOVIE METHODS

@@ -12,7 +12,7 @@ title('My Profile')
 </script>
 
 <template>
-   <div class="pbl-9" data-page-you>
+   <div class="pbl-9 grid g-3" data-page-you>
       <section class="grid g-2 a-center p-center text-center pin-5">
          <div class="profile-pic br-6 grid a-center j-center min-auto">
             <img v-if="user.getUser.img" :src="user.getUser.img" alt="">
@@ -44,6 +44,10 @@ title('My Profile')
       </section> -->
 
       <AdminPanel v-if="user.getUser.admin" />
+
+      <div v-else class="f-size-medium mt-8">
+         <p class="text-center">Want to become an admin? Contact the author at <b>ayobamsik@gmail.com</b></p>
+      </div>
 
 
    </div>

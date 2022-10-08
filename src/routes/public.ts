@@ -103,7 +103,7 @@ function getRandomNumber() {
 
 function getRandomObject(array: string[]) {
    const length = Math.random() * array.length
-   const newArray = array.sort((a, b) => Math.random() - 0.5).slice(0, length)
+   const newArray = [...array.sort((a, b) => Math.random() - 0.5)[0]]
 
    const newObject: RandomObject = {}
 

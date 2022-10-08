@@ -1,10 +1,10 @@
 <template>
-   <Featured />
-   <ul class="pin-6 pbl-7 mt-5 grid g-5 pb-6" data-card-list>
-      <Card v-for="(d, i) in data" :data="d" :key="i" />
-   </ul>
-   {{ computedDone }}
-   {{ state }}
+   <div>
+      <Featured />
+      <ul class="pin-6 pbl-7 mt-5 grid g-5 pb-6" data-card-list>
+         <Card v-for="(d, i) in data" :data="d" :key="i" />
+      </ul>
+   </div>
 
 </template>
 
@@ -12,7 +12,7 @@
 import Featured from '../../components/card/Featured.vue';
 import Card from '../../components/card/Card.vue';
 import { ref } from '@vue/reactivity';
-import { inject } from 'vue';
+import { inject, onErrorCaptured } from 'vue';
 import type { BaseFilm } from '@/composables/types';
 import { apiGet } from '@/composables/auth';
 
@@ -22,6 +22,7 @@ const state = $ref({
    count: 0,
    increment: 20
 })
+const wrapFn = inject('wrapFn')
 
 const computedDone = $computed(() => {
    return (state.page * state.increment) >= state.count
@@ -30,10 +31,15 @@ const computedDone = $computed(() => {
 state.title('Home Page')
 
 let data = $ref([] as BaseFilm<string[]>[])
-const x = await apiGet(`pages/home?page=${state.page}`)
-state.count = x.count
-state.page = x.page
-data = x.data as BaseFilm<string[]>[]
+const x = wrapFn('Loading Home Page', async () => await apiGet(`pages/home?page=${state.page}`))
+if (x) {
+
+   state.count = x.count
+   state.page = x.page
+   data = x.data as BaseFilm<string[]>[]
+}
+
+onErrorCaptured((e) => { console.error(e) })
 
 </script>
 
