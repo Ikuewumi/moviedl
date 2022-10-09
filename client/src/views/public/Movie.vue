@@ -7,7 +7,7 @@ import Link from '@/components/public/Link.vue';
 import Metadata from '@/components/public/Metadata.vue';
 import Comments from '@/components/public/Comments.vue'
 import type { iPinia, iTitle, Movie } from '@/composables/types';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import useUser from '@/stores/user';
 
 const props = defineProps(['id'])
@@ -71,7 +71,11 @@ const formatDate = (x: string) => {
 
 const user = useUser()
 
-onErrorCaptured()
+onErrorCaptured((e) => {
+	console.error(e)
+	const router = useRouter()
+        router.push('/404')
+})
 
 </script>
 

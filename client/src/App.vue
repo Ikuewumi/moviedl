@@ -57,8 +57,6 @@ onErrorCaptured(() => err = true)
             </template>
          </Suspense>
 
-         <ErrorVue v-if="err" />
-
       </section>
       <Random />
    </main>

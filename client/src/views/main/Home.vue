@@ -31,9 +31,8 @@ const computedDone = $computed(() => {
 state.title('Home Page')
 
 let data = $ref([] as BaseFilm<string[]>[])
-const x = wrapFn('Loading Home Page', async () => await apiGet(`pages/home?page=${state.page}`))
+const x = await wrapFn('Loading Home Page', async () => await apiGet(`pages/home?page=${state.page}`))
 if (x) {
-
    state.count = x.count
    state.page = x.page
    data = x.data as BaseFilm<string[]>[]

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { validateId } from '@/composables/abstract';
 import { apiGet } from '@/composables/auth';
-import { ref, inject, computed, watchEffect, watch, onErrorCaputured } from 'vue';
+import { ref, inject, computed, watchEffect, watch, onErrorCaptured } from 'vue';
 import { regexObject } from '@/composables/env';
 import Link from '@/components/public/Link.vue';
 import Metadata from '@/components/public/Metadata.vue';
@@ -10,7 +10,7 @@ import type { B, Season } from '@/composables/series';
 import IndexView from '@/components/public/IndexView.vue';
 import SeasonView from '@/components/public/SeasonView.vue';
 import Comments from '@/components/public/Comments.vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import useUser from '@/stores/user';
 
 const props = defineProps(['id'])
@@ -69,7 +69,10 @@ const formatDate = (x: string) => {
 
 const user = useUser()
 
-onErrorCaptured()
+onErrorCaptured((e) => {
+   console.error(e)
+})
+
 
 </script>
 
