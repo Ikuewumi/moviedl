@@ -169,9 +169,8 @@ router.post('/movies/:id', checkImdbID, limit, async (req: UserReq, res: Respons
       }
 
       // @TODO - Add calls to the actual omDB API
-      const response = await fetch(`${process.env.SERVER_URL}/api/omdb/movies/${req.params.id}`)
-      if (!response.ok) return sendMsg(res, 'Could not find movie', 404)
-      const data = await response.json() as CustomMovie
+      const response = await getMovie(req.params.id)
+      const data = response
 
       const data_ = new Movie({
          ...data,

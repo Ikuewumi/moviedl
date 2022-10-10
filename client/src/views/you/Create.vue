@@ -185,7 +185,7 @@ function sRemoveLink(options: HybridOptions) {
 
 }
 
-onErrorCaptured()
+onErrorCaptured(e => console.error(e))
 
 
 // MOVIE METHODS

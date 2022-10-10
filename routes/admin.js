@@ -120,10 +120,8 @@ router.post('/movies/:id', composables_1.checkImdbID, limit, async (req, res) =>
             return (0, composables_1.sendMsg)(res, 'Invalid parameters', 400);
         }
         // @TODO - Add calls to the actual omDB API
-        const response = await fetch(`${process.env.SERVER_URL}/api/omdb/movies/${req.params.id}`);
-        if (!response.ok)
-            return (0, composables_1.sendMsg)(res, 'Could not find movie', 404);
-        const data = await response.json();
+        const response = await (0, omdb_1.getMovie)(req.params.id);
+        const data = response;
         const data_ = new Movie_1.default({
             ...data,
             Type: 'movie',
